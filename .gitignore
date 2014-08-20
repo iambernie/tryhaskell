@@ -7,5 +7,7 @@
 *.jpg
 *.hdf5
 *.zsh
+*.o
+*.hi
 *__pycache__
 

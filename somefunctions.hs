@@ -203,8 +203,8 @@ concat'' (xs:xss) = xs ++ concat xss
 powers :: Integral a => a -> [a]
 powers n = n : map (* n) (powers n)
 
-divisors_of :: Integral a => a -> [a]
-divisors_of x = [ n | n <- [1..x-1], x `mod` n == 0 ]
+divisorsOf :: Integral a => a -> [a]
+divisorsOf x = [ d | d <- [1..(x `div` 2)], x `mod` d == 0 ]
 
 
 getLastElem :: [a] -> a

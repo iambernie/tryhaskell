@@ -1,3 +1,13 @@
+{-
+getChar :: IO Char
+putChar :: Char -> IO ()
+(>>=) :: Monad m => m a -> (a -> m b) -> m b
+(>>) :: Monad m => m a -> m b -> m b
+return :: Monad m => a -> m a
+sequence_ :: Monad m => [m a] -> m ()
+sequence :: Monad m => [m a] -> m [a]
+-}
+
 echo :: IO ()
 echo = getChar >>= putChar
 -- Prelude> echo   (then after hitting 'z' once)
@@ -61,5 +71,21 @@ echoFourChars' = getChar >>= \c1 ->
                      putChar c2
                      putChar c3
                      putChar c4
+
+ready :: IO Bool
+ready = getChar >>= \c ->
+        return (c == 'y')
+
+getLine' :: IO String
+getLine' = do
+             c <- getChar
+             if c == '\n'
+                 then return ""
+             else 
+                 do 
+                   l <- getLine
+                   return (c:l)
+
+
 
 
