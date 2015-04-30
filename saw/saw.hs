@@ -48,6 +48,8 @@ nTree n = iterate insertMoves (nTree 0) !! n
 
 fpow n = foldr (.) id . replicate n
 
-
+main = do
+    --print (map (length . nTree) [1..20])
+    print (length$  nTree 20)
 
 
