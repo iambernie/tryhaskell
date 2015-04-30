@@ -39,7 +39,8 @@ allowedMoves :: Path -> Punt -> [Punt]
 allowedMoves path pt =  filter (`notElem` path) [move pt | move <- moves]
 
 insertMoves :: Tree (Punt, Path) -> Tree (Punt, Path)
-insertMoves (Node (pos, path) []) = Node (pos, path) [Node (p, pos:path) [] | p <- allowedMoves path pos ]
+insertMoves (Node (pos, path) []) = Node (pos, path) trees
+    where trees = [Node (p, pos:path) [] | p <- allowedMoves path pos ]
 insertMoves (Node (pos, path) trees) = Node (pos, path) (map insertMoves trees)
 
 nTree :: Int -> Tree (Punt, Path)
@@ -48,8 +49,14 @@ nTree n = iterate insertMoves (nTree 0) !! n
 
 fpow n = foldr (.) id . replicate n
 
+paths :: [(Punt, Path)] -> [Path]
+paths ((punt, path):[])  = [path] 
+paths ((punt, path):xs)  = path:[] ++ paths xs
+
+--pathlengths ::(Num b) => Tree a -> [b]
+--pathlengths tree = map length  (paths . flatten) tree 
+
 main = do
-    --print (map (length . nTree) [1..20])
-    print (length$  nTree 20)
+    print (nTree 3)
 
 
