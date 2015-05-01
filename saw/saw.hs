@@ -30,7 +30,7 @@ moves = [move North, move South, move West, move East]
 origin = (0,0) :: Punt
 
 root :: Tree (Punt, Path)
-root = Node (origin, []) []
+root = Node ((0,1), [(0,0)]) []
 
 sqrdDistance :: Punt -> Int
 sqrdDistance (x,y) = x^2+y^2
@@ -50,13 +50,18 @@ nTree n = iterate insertMoves (nTree 0) !! n
 fpow n = foldr (.) id . replicate n
 
 paths :: [(Punt, Path)] -> [Path]
-paths ((punt, path):[])  = [path] 
+paths ((punt, path):[])  = [path]
 paths ((punt, path):xs)  = path:[] ++ paths xs
 
---pathlengths ::(Num b) => Tree a -> [b]
---pathlengths tree = map length  (paths . flatten) tree 
+pathlengths :: Tree (Punt, Path) -> [Int]
+pathlengths tree = map length $ (paths . flatten) tree
+
+zsaw :: Int -> Int
+zsaw n = length $ filter(==(n)) $ pathlengths (nTree (n))
+
+trees = iterate insertMoves (nTree 0)
 
 main = do
-    print (nTree 3)
+    print (map zsaw [1..14])
 
 
