@@ -76,7 +76,6 @@
 --
 -- Style:
 --
-
 import Data.List (union, sort)
 
 fibs = 0 : 1 : zipWith (+) fibs (tail fibs)
@@ -428,3 +427,6 @@ mapp f (x:xs) = f x : mapp f xs
 groterDanTien :: Integer -> String
 groterDanTien x | x <= 10   = "<=10"
                 | otherwise = ">10"
+
+
+

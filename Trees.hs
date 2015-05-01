@@ -1,23 +1,20 @@
-
 {-
  -  Tree a with a :: Char
 
 
-                               Branch
-                             /        \
-                            /          \
-                      Branch             Leaf 'a'
-                     /     \
-                    /       \
-              Branch         Leaf 'b'
-             /      \
-            /        \
-      Leaf 'c'        Leaf 'd'
+                        Branch
+                         /  \
+                        /    \
+                   Branch    Leaf 'a'
+                   /   \
+                  /     \
+              Branch    Leaf 'b'
+               /  \
+              /    \
+        Leaf 'c'    Leaf 'd'
+-}
 
- -}
-
-myabcdTree = Branch
-                    (Branch
+myabcdTree = Branch (Branch
                            (Branch
                                    (Leaf 'c')
                                    (Leaf 'd'))
@@ -28,20 +25,24 @@ mynumberTree = Branch (Branch (Branch (Leaf 3) (Leaf 4)) (Leaf 2)) (Leaf 1)
 
 data Tree a = Leaf a
             | Branch (Tree a) (Tree a)
-            deriving (Show)
 
 treeMap :: (a -> b) -> Tree a -> Tree b
 treeMap f (Leaf x) = Leaf (f x)
 treeMap f (Branch left right) = Branch (treeMap f left) (treeMap f right)
 
---leafCount :: Tree a -> Int
---leafCount
---
---treeSum :: Tree a -> Int
+showTree :: (Show a) => Tree a -> String
+showTree (Leaf x) = show x
+showTree (Branch l r) = "<"++ showTree l ++"|"++ showTree r ++">"
 
+showsTree :: (Show a) => Tree a -> String -> String
+showsTree (Leaf x) = shows x
+showsTree (Branch l r) = ('<':) . showsTree l . ('|':) . showsTree r . ('>':)
 
-
-
+readsTree :: (Read a) => ReadS (Tree a) 
+--readsTree :: (Read a) => String -> [(Tree a, String)]
+readsTree ('<':s) = [(Branch l r, u) | (l, '|':t) <- readsTree s,
+                                       (r, '>':u) <- readsTree t ]
+readsTree s       = [(Leaf x, t)    | (x,t) <- reads s]
 
 
 {-
@@ -79,84 +80,53 @@ telBlad :: Boom a -> Int
 telBlad Blad        = 1
 telBlad (Tak _ p q) = telBlad p + telBlad q
 
---telTakwaarden :: Boom a -> Int
---telTakwaarden Blad        = 0
---telTakwaarden (Tak x p q) = x + (telTakwaarden p) + (telTakwaarden q)
-
-type Naam = String
-data StamBoom = Vader Naam
-              | Moeder Naam
-
-
--- Zoeken in lineaire data structuur:
---
---    Lege Lijst:
---    =======================================================
---    | | | | | | | | | | | | | | | | | | | | | | | | | | | |
---    =======================================================
---
---    voegToe 1 Lijst
---    voegToe 9 Lijst
---    voegToe 7 Lijst
---    voegToe 3 Lijst
---    voegToe 5 Lijst
---
---    =======================================================
---    |5|3|7|9|1| | | | | | | | | | | | | | | | | | | | | | |
---    =======================================================
---
---
---
--- Zoekbomen
---
--- een zoekboom opbouwen:
---
 {-
 
     Prelude> insertBoom 5 Blad
     Tak 5 Blad Blad
     it :: (Ord a, Num a) => Boom a
 
-                             Tak 5
-                            /     \
-                           /       \
-                        Blad       Blad
+                      Tak 5
+                     /     \
+                    /       \
+                 Blad       Blad
 
     Prelude> insertBoom 200 $ insertBoom 5 Blad
     Tak 5 Blad (Tak 200 Blad Blad)
 
-                             Tak 5
-                            /     \
-                           /       \
-                        Blad       Tak 200
-                                   / \
-                                  /   \
-                               Blad   Blad
+                     Tak 5
+                    /     \
+                   /       \
+                Blad       Tak 200
+                           / \
+                          /   \
+                       Blad   Blad
 
     Prelude> insertBoom 4 $ insertBoom 200 $ insertBoom 5 Blad
     Tak 5 (Tak 4 Blad Blad) (Tak 200 Blad Blad)
-                             Tak 5
-                            /     \
-                           /       \
-                        Tak 4       Tak 200
-                         / \         / \
-                        /   \       /   \
-                    Blad   Blad  Blad   Blad
+
+                    Tak 5
+                   /     \
+                  /       \
+               Tak 4       Tak 200
+                / \         / \
+               /   \       /   \
+           Blad   Blad  Blad   Blad
 
     Prelude> insertBoom 6 $ insertBoom 4 $ insertBoom 200 $ insertBoom 5 Blad
     Tak 5 (Tak 4 Blad Blad) (Tak 200 (Tak 6 Blad Blad) Blad)
 
 
-                             Tak 5
-                            /     \
-                           /       \
-                        Tak 4       Tak 200
-                         / \         / \
-                        /   \       /   \
-                    Blad   Blad  Tak 6   Blad
-                                  / \
-                                 /   \
-                               Blad Blad
+                      Tak 5
+                     /     \
+                    /       \
+                 Tak 4       Tak 200
+                  / \         / \
+                 /   \       /   \
+             Blad   Blad  Tak 6   Blad
+                           / \
+                          /   \
+                        Blad Blad
 
 
     Prelude> lijstNaarBoom [6,4,200,5]
