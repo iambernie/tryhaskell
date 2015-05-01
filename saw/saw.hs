@@ -45,7 +45,9 @@ insertMoves (Node (pos, path) trees) = Node (pos, path) (map insertMoves trees)
 
 nTree :: Int -> Tree (Punt, Path)
 nTree 0 = root
-nTree n = iterate insertMoves (nTree 0) !! n
+nTree n = iterate insertMoves (nTree 0) !! (n-1)
+
+-- evt trees = iterate insertMoves (nTree 0)
 
 fpow n = foldr (.) id . replicate n
 
@@ -53,15 +55,23 @@ paths :: [(Punt, Path)] -> [Path]
 paths ((punt, path):[])  = [path]
 paths ((punt, path):xs)  = path:[] ++ paths xs
 
+
 pathlengths :: Tree (Punt, Path) -> [Int]
 pathlengths tree = map length $ (paths . flatten) tree
 
 zsaw :: Int -> Int
 zsaw n = length $ filter(==(n)) $ pathlengths (nTree (n))
 
-trees = iterate insertMoves (nTree 0)
+sumSqrdDistances :: Int -> Int
+sumSqrdDistances n = sum $ map (\((x,y),path) -> x^2+y^2) $ filter (isLength n) (flatten $ nTree n)
+
+isLength :: Int -> (Punt, Path) -> Bool
+isLength n (punt, path) = length path == n
+
+reSqrd :: Int -> Float
+reSqrd n = fromIntegral (sumSqrdDistances n) / fromIntegral (zsaw n)
 
 main = do
-    print (map zsaw [1..14])
+    print (map sumSqrdDistances [1..15])
 
 
