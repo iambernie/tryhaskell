@@ -429,4 +429,20 @@ groterDanTien x | x <= 10   = "<=10"
                 | otherwise = ">10"
 
 
+slow_fib :: Int -> Integer
+slow_fib 0 = 0
+slow_fib 1 = 1
+slow_fib n = slow_fib (n-2) + slow_fib (n-1)
 
+
+memoized_fib :: Int -> Integer
+memoized_fib = (map fib [0 ..] !!)
+   where fib 0 = 0
+         fib 1 = 1
+         fib n = memoized_fib (n-2) + memoized_fib (n-1)
+
+f :: (Int -> Int) -> Int -> Int
+f mf 0 = 0
+f mf n = max n $ mf (div n 2) +
+                 mf (div n 3) +
+                 mf (div n 4)

@@ -1,4 +1,17 @@
+{-# LANGUAGE DeriveDataTypeable #-}
+
+import System.Console.CmdArgs
 import Data.Tree
+
+data Saw = Saw {configurations :: String}
+              deriving (Show, Data, Typeable)
+
+sawArgs = Saw {configurations = def}
+
+data PolyTree a = End
+                | Branch a (PolyTree a) (PolyTree a) (PolyTree a) (PolyTree a)
+                deriving (Show)
+
 
 ptree :: (Show a) => Tree a -> IO ()
 ptree = putStrLn . drawTree . stringTree
@@ -71,7 +84,11 @@ isLength n (punt, path) = length path == n
 reSqrd :: Int -> Float
 reSqrd n = fromIntegral (sumSqrdDistances n) / fromIntegral (zsaw n)
 
-main = do
-    print (map sumSqrdDistances [1..15])
 
+main =  cmdArgs sawArgs >>= print
+     -- run program
+
+     -- writetofile
+     --print (map zsaw [1..10]) >>
+     --print "done"
 
