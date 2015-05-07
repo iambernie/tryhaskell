@@ -446,3 +446,5 @@ f mf 0 = 0
 f mf n = max n $ mf (div n 2) +
                  mf (div n 3) +
                  mf (div n 4)
+
+g x = x^2
