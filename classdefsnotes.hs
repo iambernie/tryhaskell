@@ -31,6 +31,16 @@ class (Functor f) => Applicative f where
     pure  :: a -> f a
     (<*>) :: f (a -> b) -> f a -> f b
 
+class (Functor f, Foldable f) => Traversable f where
+  traverse :: Applicative g => f (g a) -> g (f a)
+
+class Foldable f where
+  foldMap :: Monoid m => (a -> m) -> f a -> m
+
+class Monoid a where
+  mempty  :: a
+  mappend :: a -> a -> a
+  mconcat :: [a] -> a
 
 {-                    Maybe                   -}
 
