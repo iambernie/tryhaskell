@@ -63,3 +63,8 @@ theodds' = [x*2 | x <-[1..10], odd x]
 
 f :: Float -> Float
 f = \x -> x^2
+
+addWorld :: String -> IO String
+addWorld s = return (s++" world")
+
+
