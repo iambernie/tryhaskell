@@ -2,11 +2,13 @@
 
 import System.Console.CmdArgs
 import Data.Tree
+import System.IO
 
-data Saw = Saw {configurations :: String}
+data Saw = Saw {nrconfigs :: Int
+               ,yrname :: String}
               deriving (Show, Data, Typeable)
 
-sawArgs = Saw {configurations = def}
+sawArgs = Saw {nrconfigs = def, yrname =""}
 
 ptree :: (Show a) => Tree a -> IO ()
 ptree = putStrLn . drawTree . stringTree
@@ -63,6 +65,14 @@ isLength n (punt, path) = length path == n
 reSqrd :: Int -> Float
 reSqrd n = fromIntegral (sumSqrdDistances n) / fromIntegral (zsaw n)
 
-main =  cmdArgs sawArgs >>= print
-     --print (map zsaw [1..10]) >>
+main :: IO ()
+main =  cmdArgs sawArgs >>= \opts ->
+        putStr "Hi " >> putStrLn (yrname opts) >>
+        putStrLn ("Number of configurations to run: "++ (show $ nrconfigs opts) )>>
+        --putStrLn (show $ reSqrd (nrconfigs opts)) >>
+        putStrLn (show $ map zsaw [1..(nrconfigs opts)]) >>
+        putStrLn (show $ map sumSqrdDistances [1..(nrconfigs opts)]) >>
+
+        return ()
+        --write to file
 
