@@ -42,6 +42,23 @@ class Monoid a where
   mappend :: a -> a -> a
   mconcat :: [a] -> a
 
+{- Monoids should satisfy the following laws:
+   mappend mempty x        = x
+   mappend x mempty        = x
+   mappend x (mappend y z) = mappend (mappend x y) z
+   mconcat                 = foldr mappend mempty -}
+
+
+class Monad m => MonadPlus m where
+  mzero :: m a
+  mplus :: m a -> m a -> m a
+
+{- instances of MonadPlus are expected to satisfy:
+
+    mzero >>= f  =  mzero
+    v >> mzero   =  mzero
+                                                   -}
+
 {-                    Maybe                   -}
 
 instance  Functor Maybe  where
