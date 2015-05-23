@@ -3,6 +3,7 @@
 import System.Console.CmdArgs
 import System.IO
 import Data.List (foldl')
+import Control.Parallel
 
 data Saw = Saw {nrconfigs :: Int
                }
@@ -77,7 +78,7 @@ nBoom n = iterate insertM root !! n
 main :: IO ()
 main =  cmdArgs sawArgs >>= \opts ->
         putStrLn ("Number of configurations to run: "++ (show $ nrconfigs opts) )>>
-        putStrLn (show $ map (\xs -> (zsaw xs)) $ map eindPunten $ map nBoom [1..(nrconfigs opts)]) >>
-        putStrLn (show $ map (\xs -> (sumSqrdDist xs)) $ map eindPunten $ map nBoom [1..(nrconfigs opts)]) >>
+        putStrLn (show $ map (\xs -> (zsaw xs)) $ map eindPunten $ map nBoom [0..(nrconfigs opts)]) >>
+        putStrLn (show $ map (\xs -> (sumSqrdDist xs)) $ map eindPunten $ map nBoom [0..(nrconfigs opts)]) >>
         return ()
 
