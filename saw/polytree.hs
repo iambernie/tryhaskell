@@ -3,7 +3,6 @@
 import System.Console.CmdArgs
 import System.IO
 import Data.List (foldl')
-import Control.Parallel
 
 data Saw = Saw {nrconfigs :: Int
                }
