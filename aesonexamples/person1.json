@@ -1,0 +1,19 @@
+{ "name":"Pietje",
+  "age": 21,
+  "likespizza":true,
+  "lottonumbers":[2,5,8,14,27,33,34],
+  "passphrase":["car", "airplane", "ginger", "key", "sofa"],
+  "addresses":[
+                { "street": "Spoorweg",
+                  "no": 123,
+                  "city": "Buitenstede",
+                  "country": "Nederland"
+                },
+                { "street": "Achterveld",
+                  "no": 321,
+                  "city": "Binnenstede",
+                  "country": "Nederland"
+                }
+              ],
+  "type":1
+}

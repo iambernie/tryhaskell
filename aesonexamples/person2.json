@@ -1,0 +1,18 @@
+{ "name":"Plukje",
+  "age": 22,
+  "likespizza":false,
+  "lottonumbers":[3,6,8,12,23,39,41],
+  "passphrase":["boom", "noot", "sigaar", "sleutel", "jas"],
+  "addresses":[
+                { "straatnaam": "Scholweg",
+                  "huisnummer": 3,
+                  "stad": "Visstad",
+                  "land": "Nederland"
+                },
+                { "straatnaam": "Kabeljauwlaan",
+                  "huisnummer": 32,
+                  "stad": "Visstad",
+                  "land": "Nederland"
+                }
+              ]
+}
