@@ -38,7 +38,7 @@ showsTree :: (Show a) => Tree a -> String -> String
 showsTree (Leaf x) = shows x
 showsTree (Branch l r) = ('<':) . showsTree l . ('|':) . showsTree r . ('>':)
 
-readsTree :: (Read a) => ReadS (Tree a) 
+readsTree :: (Read a) => ReadS (Tree a)
 --readsTree :: (Read a) => String -> [(Tree a, String)]
 readsTree ('<':s) = [(Branch l r, u) | (l, '|':t) <- readsTree s,
                                        (r, '>':u) <- readsTree t ]
@@ -158,9 +158,9 @@ labels (Tak p links rechts) = labels links ++ [p] ++ labels rechts
 sorteer :: Ord a => [a] -> [a]
 sorteer = labels . lijstNaarBoom
 
-
-
-
+--listpaths :: Tree a -> [[a]]
+--listpaths (Node label []) = [[label]]
+--listpaths (Node label xs) = map (label:) $ concat $ map listpaths xs
 
 
 
